@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="4 40 372 400" width="372" height="400" role="img" aria-label="KioMind">
+  <defs>
+    <linearGradient id="km-g" gradientUnits="userSpaceOnUse" x1="20" y1="60" x2="340" y2="440">
+      <stop offset="0" stop-color="#38bdf8"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <!-- Toldo -->
+  <path fill="url(#km-g)" d="M62 62 H278 L322 138 A30 30 0 0 1 262 138 A30 30 0 0 1 202 138 A30 30 0 0 1 142 138 A30 30 0 0 1 82 138 A30 30 0 0 1 22 138 Z"/>
+  <!-- Local: lado izquierdo y piso; a la derecha lo interrumpe el cerebro -->
+  <g fill="none" stroke="url(#km-g)" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M60 172 V386 Q60 406 80 406 H214"/>
+    <path d="M280 172 V206"/>
+  </g>
+  <!-- Cerebro -->
+  <g fill="none" stroke="url(#km-g)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M196 356 C168 348 164 306 190 296 C174 266 200 240 228 250 C240 218 282 214 292 244 C322 232 348 262 334 292 C356 310 348 352 318 356 C322 386 286 400 266 382 C254 404 216 400 208 376 C190 384 182 368 196 356 Z"/>
+    <!-- Tronco y circuitos -->
+    <path d="M254 258 V420"/>
+    <path d="M254 296 H286 V278"/>
+    <path d="M254 326 H220 V308"/>
+    <path d="M286 332 H306"/>
+    <path d="M234 352 H254"/>
+  </g>
+  <!-- Nodos -->
+  <g fill="none" stroke="url(#km-g)" stroke-width="9">
+    <circle cx="254" cy="250" r="9"/>
+    <circle cx="286" cy="270" r="9"/>
+    <circle cx="220" cy="300" r="9"/>
+    <circle cx="314" cy="332" r="9"/>
+    <circle cx="226" cy="352" r="9"/>
+  </g>
+</svg>

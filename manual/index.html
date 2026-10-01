@@ -1,0 +1,614 @@
+<title>Manual KioMind</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400&display=swap">
+<style>
+:root{
+  color-scheme:dark;
+  --surface:#0f1419;--card:#1a2332;--elevated:#243044;
+  --primary:#312e81;--secondary:#0ea5e9;--accent:#38bdf8;--light:#8b5cf6;
+  --ink:#f1f5f9;--muted:rgba(241,245,249,.62);--faint:rgba(241,245,249,.4);
+  --line:rgba(255,255,255,.09);--line-strong:rgba(56,189,248,.35);
+  --amber-bg:rgba(120,53,15,.35);--amber-line:rgba(251,191,36,.4);--amber-ink:#fde68a;
+  --green-bg:rgba(6,78,59,.35);--green-line:rgba(52,211,153,.4);--green-ink:#a7f3d0;
+  --code-bg:rgba(56,189,248,.12);--code-ink:#bae6fd;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--surface);color:var(--ink);font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;font-size:16.5px;line-height:1.6;
+  background-image:radial-gradient(900px 500px at 15% -10%,rgba(139,92,246,.22),transparent 60%),radial-gradient(700px 400px at 90% 0%,rgba(56,189,248,.16),transparent 60%);background-repeat:no-repeat}
+a{color:var(--accent)}
+.gradient-text{background:linear-gradient(90deg,var(--accent),var(--light));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* ---------- hero ---------- */
+.hero{max-width:1180px;margin:0 auto;padding-block:28px 8px;padding-inline:16px}
+.hero-card{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:32px;align-items:center;background:linear-gradient(135deg,rgba(49,46,129,.55),rgba(26,35,50,.9));border:1px solid var(--line-strong);border-radius:28px;padding:40px 40px;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+@media (max-width:900px){.hero-card{grid-template-columns:1fr;padding:28px 22px}}
+.hero .eyebrow{margin:0 0 12px;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:var(--accent)}
+.hero h1{margin:0;font-size:clamp(44px,7vw,74px);line-height:.95;letter-spacing:-.03em;font-weight:800}
+.hero .tagline{margin:14px 0 14px;font-size:clamp(18px,2.4vw,24px);color:var(--ink);font-weight:600}
+.hero .lead{margin:0 0 22px;color:var(--muted);max-width:60ch;font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px}
+.chip{font-size:13px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid var(--line-strong);background:rgba(15,20,25,.6);color:#e0f2fe}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:14px;font-weight:700;text-decoration:none;font-size:15px;border:1px solid transparent}
+.btn.primary{background:linear-gradient(90deg,var(--accent),var(--light));color:#0f1419}
+.btn.ghost{border-color:var(--line-strong);color:var(--ink);background:rgba(15,20,25,.5)}
+.hero-logo{display:flex;justify-content:center}
+.hero-logo img{width:min(260px,60vw);height:auto;filter:drop-shadow(0 20px 40px rgba(56,189,248,.35))}
+.meta{display:flex;flex-wrap:wrap;gap:22px;margin:22px 0 0;padding:0}
+.meta div{min-width:120px}
+.meta dt{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);font-weight:700}
+.meta dd{margin:2px 0 0;font-weight:600}
+
+.requisitos{margin:22px 0 0;padding:14px 18px;border:1px solid var(--line-strong);border-radius:16px;background:rgba(15,20,25,.55)}
+.requisitos h3{margin:0 0 6px;font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--accent)}
+.requisitos ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--muted);columns:2;column-gap:24px}
+@media (max-width:700px){.requisitos ul{columns:1}}
+.requisitos li{break-inside:avoid;margin-bottom:4px}
+/* ---------- vista rápida ---------- */
+.quick{max-width:1180px;margin:0 auto;padding-block:20px 8px;padding-inline:16px}
+.quick h2{font-size:14px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint);margin:0 0 12px;font-weight:700}
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media (max-width:900px){.quick-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.quick-grid{grid-template-columns:1fr}}
+.quick-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 16px 14px;text-decoration:none;color:var(--ink);transition:transform .15s,border-color .15s}
+.quick-card:hover{transform:translateY(-2px);border-color:var(--line-strong)}
+.quick-card svg{width:26px;height:26px;stroke:url(#g);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.quick-card b{display:block;margin:10px 0 4px;font-size:16px}
+.quick-card span{color:var(--muted);font-size:14px}
+
+/* ---------- cuerpo ---------- */
+.wrap{max-width:1180px;margin:0 auto;padding-block:24px 64px;padding-inline:16px;display:grid;grid-template-columns:270px minmax(0,1fr);gap:40px}
+@media (max-width:900px){.wrap{grid-template-columns:1fr;gap:16px}}
+.side{position:sticky;top:env(safe-area-inset-top,0px);align-self:start;max-height:calc(100vh - 24px);overflow:auto;padding:14px 8px 14px 0}
+@media (max-width:900px){.side{position:static;max-height:none}}
+.side nav h2{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint);margin:0 0 10px}
+.side nav ol{list-style:none;margin:0;padding:0;counter-reset:cap}
+.side nav li{counter-increment:cap}
+.side nav a{display:flex;gap:10px;align-items:baseline;padding:7px 10px;border-radius:10px;color:var(--muted);text-decoration:none;font-size:14px;border-left:2px solid transparent}
+.side nav a::before{content:counter(cap,decimal-leading-zero);font-size:11px;font-weight:700;color:var(--faint);font-variant-numeric:tabular-nums}
+.side nav a:hover,.side nav a:focus-visible{background:rgba(255,255,255,.05);color:var(--ink);outline:none}
+.side nav a.active{border-left-color:var(--accent);color:var(--ink);background:rgba(56,189,248,.1)}
+.side nav a.active::before{color:var(--accent)}
+.main{min-width:0}
+section{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 28px 18px;margin-bottom:18px;scroll-margin-top:16px;max-width:82ch}
+@media (max-width:600px){section{padding:18px 16px 12px}}
+h2{font-size:28px;margin:0 0 12px;letter-spacing:-.01em;font-weight:800;text-wrap:balance;position:relative;padding-left:16px}
+h2::before{content:"";position:absolute;left:0;top:.2em;bottom:.2em;width:5px;border-radius:3px;background:linear-gradient(180deg,var(--accent),var(--light))}
+h3{font-size:18px;margin:22px 0 6px;color:#bae6fd;font-weight:700}
+p{margin:6px 0 12px}
+ul,ol{margin:6px 0 14px;padding-left:22px}
+li{margin-bottom:6px}
+li::marker{color:var(--accent)}
+strong{color:#fff}
+em{color:#e0f2fe}
+code{font-family:"JetBrains Mono",Consolas,monospace;font-size:.86em;background:var(--code-bg);color:var(--code-ink);padding:2px 7px;border-radius:6px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin:10px 0 18px}
+table{width:100%;border-collapse:collapse;font-size:15px;background:rgba(15,20,25,.5)}
+th,td{padding:10px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+th{background:rgba(49,46,129,.45);color:#e0f2fe;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.note{background:var(--amber-bg);border:1px solid var(--amber-line);color:var(--amber-ink);border-radius:14px;padding:12px 16px;margin:14px 0;font-size:15.5px}
+.note strong{color:#fff}
+.note.tip{background:var(--green-bg);border-color:var(--green-line);color:var(--green-ink)}
+.checklist{list-style:none;padding-left:4px}
+.checklist li{display:flex;gap:10px}
+.checklist li::before{content:"";flex:0 0 18px;height:18px;margin-top:4px;border-radius:5px;border:1.5px solid var(--accent)}
+.diagram{font-family:"JetBrains Mono",Consolas,monospace;font-size:12.5px;line-height:1.35;background:rgba(15,20,25,.7);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto;white-space:pre;color:#bae6fd}
+dl.faq dt,dl.glossary dt{font-weight:700;color:#fff;margin-top:14px}
+dl.faq dd,dl.glossary dd{margin:3px 0 6px;color:var(--muted)}
+footer.page-foot{display:flex;align-items:center;justify-content:center;gap:12px;font-size:13px;color:var(--faint);padding:24px 0 0}
+footer.page-foot img{width:28px;height:auto}
+</style>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+<div class="hero">
+  <div class="hero-card">
+    <div>
+      <p class="eyebrow">Manual de usuario</p>
+      <h1><span class="gradient-text">KioMind</span></h1>
+      <p class="tagline">Tu kiosco, gestionado con inteligencia.</p>
+      <p class="lead">Punto de venta, caja, stock, precios, empleados, facturación electrónica, Mercado Pago y WhatsApp en un solo programa. Esta guía te lleva desde la instalación hasta el uso diario.</p>
+      <div class="chips"><span class="chip">POS</span><span class="chip">Caja y turnos</span><span class="chip">Mercado Pago</span><span class="chip">WhatsApp</span><span class="chip">Facturación ARCA</span><span class="chip">Asistente IA</span><span class="chip">Funciona sin internet</span></div>
+      <div class="ctas"><a class="btn primary" href="#c2">Empezar a usarlo</a><a class="btn ghost" href="#c3">Ver cómo se vende</a></div>
+      <dl class="meta"><div><dt>Versión</dt><dd>0.2.1</dd></div><div><dt>Edición</dt><dd>Septiembre 2026</dd></div><div><dt>Sistema</dt><dd>Windows 10 / 11</dd></div></dl>
+      <div class="requisitos">
+    <h3>Requisitos mínimos</h3>
+    <ul>
+      <li><strong>Windows 10 u 11</strong> de 64 bits, actualizado.</li>
+      <li><strong>Procesador</strong> de doble núcleo (Intel Core i3 / AMD Ryzen 3 o superior).</li>
+      <li><strong>Memoria</strong>: 4 GB de RAM (8 GB recomendados si usás el asistente y WhatsApp a la vez).</li>
+      <li><strong>Disco</strong>: 2 GB libres, preferentemente SSD.</li>
+      <li><strong>Pantalla</strong> de 1366 × 768 o más (ideal 1920 × 1080). Funciona con pantalla táctil o con mouse.</li>
+      <li><strong>Internet</strong> para Mercado Pago, WhatsApp, facturación electrónica, el asistente y las actualizaciones. Para vender no hace falta.</li>
+      <li><strong>Opcionales</strong>: lector de códigos de barras USB (modo teclado) e impresora de tickets de 58 u 80 mm.</li>
+    </ul>
+  </div>
+    </div>
+    <div class="hero-logo"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjQgNDAgMzcyIDQwMCIgd2lkdGg9IjM3MiIgaGVpZ2h0PSI0MDAiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iS2lvTWluZCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImttLWciIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMjAiIHkxPSI2MCIgeDI9IjM0MCIgeTI9IjQ0MCI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzM4YmRmOCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4YjVjZjYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gVG9sZG8gLS0+CiAgPHBhdGggZmlsbD0idXJsKCNrbS1nKSIgZD0iTTYyIDYyIEgyNzggTDMyMiAxMzggQTMwIDMwIDAgMCAxIDI2MiAxMzggQTMwIDMwIDAgMCAxIDIwMiAxMzggQTMwIDMwIDAgMCAxIDE0MiAxMzggQTMwIDMwIDAgMCAxIDgyIDEzOCBBMzAgMzAgMCAwIDEgMjIgMTM4IFoiLz4KICA8IS0tIExvY2FsOiBsYWRvIGl6cXVpZXJkbyB5IHBpc287IGEgbGEgZGVyZWNoYSBsbyBpbnRlcnJ1bXBlIGVsIGNlcmVicm8gLS0+CiAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI2ttLWcpIiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPHBhdGggZD0iTTYwIDE3MiBWMzg2IFE2MCA0MDYgODAgNDA2IEgyMTQiLz4KICAgIDxwYXRoIGQ9Ik0yODAgMTcyIFYyMDYiLz4KICA8L2c+CiAgPCEtLSBDZXJlYnJvIC0tPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNrbS1nKSIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0xOTYgMzU2IEMxNjggMzQ4IDE2NCAzMDYgMTkwIDI5NiBDMTc0IDI2NiAyMDAgMjQwIDIyOCAyNTAgQzI0MCAyMTggMjgyIDIxNCAyOTIgMjQ0IEMzMjIgMjMyIDM0OCAyNjIgMzM0IDI5MiBDMzU2IDMxMCAzNDggMzUyIDMxOCAzNTYgQzMyMiAzODYgMjg2IDQwMCAyNjYgMzgyIEMyNTQgNDA0IDIxNiA0MDAgMjA4IDM3NiBDMTkwIDM4NCAxODIgMzY4IDE5NiAzNTYgWiIvPgogICAgPCEtLSBUcm9uY28geSBjaXJjdWl0b3MgLS0+CiAgICA8cGF0aCBkPSJNMjU0IDI1OCBWNDIwIi8+CiAgICA8cGF0aCBkPSJNMjU0IDI5NiBIMjg2IFYyNzgiLz4KICAgIDxwYXRoIGQ9Ik0yNTQgMzI2IEgyMjAgVjMwOCIvPgogICAgPHBhdGggZD0iTTI4NiAzMzIgSDMwNiIvPgogICAgPHBhdGggZD0iTTIzNCAzNTIgSDI1NCIvPgogIDwvZz4KICA8IS0tIE5vZG9zIC0tPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNrbS1nKSIgc3Ryb2tlLXdpZHRoPSI5Ij4KICAgIDxjaXJjbGUgY3g9IjI1NCIgY3k9IjI1MCIgcj0iOSIvPgogICAgPGNpcmNsZSBjeD0iMjg2IiBjeT0iMjcwIiByPSI5Ii8+CiAgICA8Y2lyY2xlIGN4PSIyMjAiIGN5PSIzMDAiIHI9IjkiLz4KICAgIDxjaXJjbGUgY3g9IjMxNCIgY3k9IjMzMiIgcj0iOSIvPgogICAgPGNpcmNsZSBjeD0iMjI2IiBjeT0iMzUyIiByPSI5Ii8+CiAgPC9nPgo8L3N2Zz4K" alt="Logo de KioMind" /></div>
+  </div>
+</div>
+<div class="quick">
+  <h2>Qué hace KioMind</h2>
+  <div class="quick-grid"><a class="quick-card" href="#c3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v11H3z"/><path d="M8 20h8M12 16v4"/></svg><b>Punto de venta</b><span>Escaneá, buscá, cobrá con Enter. Favoritos, carpetas y sueltos.</span></a><a class="quick-card" href="#c6"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 11h18M8 4h8"/></svg><b>Caja y turnos</b><span>Apertura, cierre, arqueo y relevos con control de horario.</span></a><a class="quick-card" href="#c5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v12H4z"/><path d="M4 12h16M8 8V5h8v3"/></svg><b>Mercado Pago</b><span>Avisos al instante y ventas que se registran solas.</span></a><a class="quick-card" href="#c15"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg><b>WhatsApp</b><span>Cierre de caja e informes en tu celular, pedidos de clientes.</span></a><a class="quick-card" href="#c8"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M12 13v8M3 8l9 5 9-5"/></svg><b>Inventario y stock</b><span>Precios por lista, fotos, importación de facturas por foto.</span></a><a class="quick-card" href="#c16"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg><b>Asistente con IA</b><span>Consultas, lectura de facturas y respuestas automáticas.</span></a></div>
+</div>
+<div class="wrap">
+  <aside class="side"><nav class="sidenav" id="indice">
+  <h2>Índice</h2>
+  <ol>
+    <li><a href="#c1">Qué es KioMind</a></li>
+    <li><a href="#c2">Instalación y puesta en marcha</a></li>
+    <li><a href="#c3">El punto de venta (POS)</a></li>
+    <li><a href="#c4">Cobrar: medios de pago, fiado, ticket y factura</a></li>
+    <li><a href="#c5">Mercado Pago en el mostrador</a></li>
+    <li><a href="#c6">Caja, turnos y relevos</a></li>
+    <li><a href="#c7">Envases, SUBE y cigarrillos sueltos</a></li>
+    <li><a href="#c8">Inventario: productos, carpetas y precios</a></li>
+    <li><a href="#c9">Stock y proveedores</a></li>
+    <li><a href="#c10">Clientes y cuenta corriente</a></li>
+    <li><a href="#c11">Promociones y recargos</a></li>
+    <li><a href="#c12">Personal, sueldos y horarios</a></li>
+    <li><a href="#c13">Informes e historial de ventas</a></li>
+    <li><a href="#c14">Facturación electrónica (ARCA / AFIP)</a></li>
+    <li><a href="#c15">WhatsApp: reportes y control desde el celular</a></li>
+    <li><a href="#c16">Asistente con inteligencia artificial</a></li>
+    <li><a href="#c17">Usuarios y permisos</a></li>
+    <li><a href="#c18">Copias de seguridad y datos</a></li>
+    <li><a href="#c19">Licencia y actualizaciones</a></li>
+    <li><a href="#c20">Preguntas frecuentes y problemas comunes</a></li>
+    <li><a href="#c21">Atajos y glosario</a></li>
+  </ol>
+</nav></aside>
+  <div class="main">
+
+
+
+
+<section id="c1">
+  <h2>1. Qué es KioMind</h2>
+  <p>KioMind es un programa que se instala en la PC del kiosco y reúne en un solo lugar todo lo que hace falta para trabajar: el <strong>punto de venta</strong> donde se cobra, y el <strong>panel de Administración</strong> donde se configuran productos, precios, empleados, caja, informes y las conexiones con Mercado Pago, WhatsApp y facturación electrónica.</p>
+  <h3>Dos pantallas, un mismo programa</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Pantalla</th><th>Para quién</th><th>Qué se hace</th></tr>
+    <tr><td><strong>POS</strong> (punto de venta)</td><td>Cajeros y dueños</td><td>Abrir y cerrar caja, vender, cobrar, envases, SUBE, cigarrillos sueltos, avisos de Mercado Pago.</td></tr>
+    <tr><td><strong>Administración</strong></td><td>Dueño y personas autorizadas</td><td>Inventario, stock, clientes, informes, personal, facturación, usuarios, WhatsApp, Mercado Pago, sistema.</td></tr>
+  </table></div>
+  <p>Desde el POS se entra a Administración con el botón <strong>Admin</strong> del encabezado, y desde Administración se vuelve con <strong>Volver al POS</strong>. Cada usuario ve solo los módulos que tiene permitidos.</p>
+  <h3>Dónde están los datos</h3>
+  <p>Todo se guarda en la propia PC del kiosco, en una carpeta de datos que sobrevive a las actualizaciones del programa. El POS funciona aunque se corte internet; la conexión hace falta solo para Mercado Pago, WhatsApp, la facturación electrónica y el asistente.</p>
+  <div class="note tip"><strong>Regla de oro.</strong> Actualizar KioMind nunca borra ventas, caja, productos ni configuraciones. Igual, activá las copias de seguridad automáticas (capítulo 18) el primer día.</div>
+</section>
+
+<section id="c2">
+  <h2>2. Instalación y puesta en marcha</h2>
+  <h3>2.1 Instalar</h3>
+  <ol>
+    <li>Ejecutá el instalador <code>KioMind-Setup-X.Y.Z.exe</code> y seguí los pasos. Si Windows muestra un aviso de "editor desconocido", elegí <em>Más información → Ejecutar de todas formas</em>.</li>
+    <li>Al terminar, KioMind se abre solo en pantalla completa. También queda un acceso directo en el escritorio.</li>
+    <li>Para cerrar el programa usá la <strong>X</strong> de arriba a la derecha; te pide confirmación para no cerrar con una venta a medias.</li>
+  </ol>
+  <h3>2.2 Activar la licencia</h3>
+  <p>Cada PC necesita una licencia propia. La primera vez que abrís KioMind aparece la pantalla <strong>"KioMind necesita una licencia"</strong> con un <strong>código de equipo</strong> (por ejemplo <code>KM-7F3A-91C2</code>) y un código QR.</p>
+  <ol>
+    <li>Mandale el código de equipo a tu proveedor de KioMind (por WhatsApp, foto de la pantalla o dictado).</li>
+    <li>Te va a devolver un texto largo que empieza con <code>KM1.</code>. Copialo.</li>
+    <li>En la pantalla de activación tocá <strong>Pegar</strong> y después <strong>Activar</strong>.</li>
+  </ol>
+  <p>Mientras la licencia no esté cargada tenés <strong>7 días de prueba</strong> con un aviso arriba de la pantalla; el programa funciona normal. La licencia no vence salvo que se haya acordado un plazo, y queda visible en <em>Administración → Sistema</em>.</p>
+  <div class="note"><strong>Si cambiás de PC o reinstalás Windows</strong>, el código de equipo cambia y hace falta una licencia nueva. Pedila con el código nuevo.</div>
+  <h3>2.3 Primer ingreso</h3>
+  <p>El programa viene con un usuario administrador inicial:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Usuario</th><th>Contraseña inicial</th></tr>
+    <tr><td><code>admin</code></td><td><code>admin123</code></td></tr>
+  </table></div>
+  <p><strong>Cambiá esa contraseña el primer día</strong> en <em>Administración → Usuarios</em>. Con ella se puede ver y modificar todo.</p>
+  <h3>2.4 Checklist de puesta en marcha</h3>
+  <ol class="checklist">
+    <li>Nombre del negocio (Administración → Inicio, tarjeta "Nombre del negocio"). Aparece en tickets, reportes y WhatsApp.</li>
+    <li>Cargar el catálogo: con un archivo de catálogo KioMind de otro kiosco (capítulo 8.6), importando un Excel, o creando productos a mano.</li>
+    <li>Revisar las carpetas (categorías) y las listas de precios.</li>
+    <li>Crear los usuarios de los cajeros y darles permisos (capítulo 17).</li>
+    <li>Definir los turnos (Mañana, Tarde, Noche) y sus horarios (capítulo 6 y 12).</li>
+    <li>Configurar recargos por medio de pago si cobrás distinto con tarjeta o transferencia (capítulo 11).</li>
+    <li>Conectar Mercado Pago si recibís transferencias o QR (capítulo 5).</li>
+    <li>Vincular WhatsApp para recibir el cierre de caja en el celular (capítulo 15).</li>
+    <li>Activar las copias de seguridad automáticas (capítulo 18).</li>
+    <li>Si facturás electrónicamente, completar el asistente de ARCA (capítulo 14).</li>
+    <li>Abrir la primera caja y hacer una venta de prueba, después anularla (capítulo 13.3).</li>
+  </ol>
+</section>
+
+<section id="c3">
+  <h2>3. El punto de venta (POS)</h2>
+  <h3>3.1 La pantalla</h3>
+  <pre class="diagram">┌──────────────────────────────────────────────────────────────┐
+│ ENCABEZADO  Logo · Usuario · Asistente · Caja · Envases ·    │
+│             SUBE · Lista de precios · Online · Admin · Salir │
+├──────────────────────────────────────────────────────────────┤
+│ Escanear o buscar: código, "coca 500", "lays"…  (Enter)       │
+├────────────────────────────────────┬─────────────────────────┤
+│ GRILLA DE PRODUCTOS                │ CARRITO                 │
+│ Favoritos · Todos · Promociones ·  │ Ítems · Total ·         │
+│ Sueltos · Carpetas · Páginas       │ Cobrar · Esperar cobro  │
+└────────────────────────────────────┴─────────────────────────┘</pre>
+  <div class="tablewrap"><table>
+    <tr><th>Zona</th><th>Qué hay</th></tr>
+    <tr><td>Encabezado</td><td>Menú de usuario (cambiar de cajero), botón del Asistente, <strong>Caja</strong> (rojo = cerrada, azul = abierta), Envases, SUBE, selector de lista de precios, indicador Online, acceso a Administración y Salir.</td></tr>
+    <tr><td>Buscador</td><td>Sirve para el lector de códigos de barras y para escribir. Siempre está listo: no hace falta tocarlo antes de escanear.</td></tr>
+    <tr><td>Grilla</td><td>Productos por pestaña: Favoritos, Todos, Promociones, Sueltos y una pestaña por carpeta. Con flechas para pasar de página. La cantidad de columnas y filas se adapta a la pantalla y se puede personalizar (ícono de paneles).</td></tr>
+    <tr><td>Carrito</td><td>Ítems con cantidad, total, ventas en espera, historial de ventas del turno, pagos de Mercado Pago del día y los botones para cobrar.</td></tr>
+  </table></div>
+  <h3>3.2 Abrir la caja antes de vender</h3>
+  <p>Con la caja cerrada aparece la franja <strong>"Caja cerrada, no podés vender"</strong>. Tocá <strong>Caja</strong>, elegí el turno (Mañana, Tarde o Noche), contá el efectivo inicial y confirmá. Cada apertura queda registrada con el cajero, la hora y el efectivo de arranque.</p>
+  <h3>3.3 Agregar productos</h3>
+  <ul>
+    <li><strong>Escanear</strong> el código de barras: el producto entra directo al carrito.</li>
+    <li><strong>Tocar</strong> una tarjeta de la grilla.</li>
+    <li><strong>Escribir</strong> parte del nombre o el código interno. Si hay una sola coincidencia, Enter la agrega; si hay varias, se listan para elegir.</li>
+    <li>En la pestaña <strong>Favoritos</strong> se ven los productos marcados con estrella o los más vendidos, según se configure con el ícono de ajustes de esa pestaña.</li>
+  </ul>
+  <p>Los productos sin stock se marcan con <em>Sin stock</em>, pero se pueden vender igual: el stock queda en negativo para que después lo corrijas.</p>
+  <h3>3.4 El carrito</h3>
+  <ul>
+    <li><strong>− / +</strong> cambian la cantidad; doble clic sobre la cantidad permite escribir un número.</li>
+    <li><strong>Eliminar</strong> saca un ítem; <strong>Vaciar</strong> limpia todo.</li>
+    <li><strong>Pausar venta</strong> guarda el carrito para atender a otra persona y retomarlo después.</li>
+    <li><strong>Esperar cobro (sin cerrar caja)</strong> deja la venta en espera hasta que llegue la transferencia o el pago con QR. Aparece como "N esperando cobro"; al tocarla se retoma y se cobra.</li>
+    <li><strong>Cobrar (Enter)</strong> abre la ventana de cobro.</li>
+  </ul>
+  <h3>3.5 Cambiar de cajero y relevo de turno</h3>
+  <p>Con el menú de usuario (arriba a la izquierda) cualquier cajero entra con su contraseña sin cerrar la caja; las ventas se registran a nombre de quien está logueado. Al llegar la hora de inicio de un turno aparece el <strong>control de horario</strong>: el que llega elige su nombre y pone su contraseña, y desde ese momento las ventas cuentan para él. Si llega tarde, KioMind registra la demora y el tiempo que le debe al compañero (capítulo 12.3).</p>
+  <h3>3.6 Otras cosas que pasan en el POS</h3>
+  <ul>
+    <li><strong>Avisos de Mercado Pago</strong>: globo con monto, pagador y hora cuando entra un pago (capítulo 5).</li>
+    <li><strong>Mensajes urgentes</strong> que el dueño manda por WhatsApp aparecen en pantalla para los cajeros (capítulo 15).</li>
+    <li><strong>Pedidos por WhatsApp</strong> de clientes: panel con los pedidos activos, para armarlos y responder.</li>
+    <li><strong>Auto Stock</strong>: en momentos sin ventas, KioMind pregunta cuánto queda de algunos productos para mantener el stock al día.</li>
+    <li><strong>Asistente</strong>: chat con inteligencia artificial para consultas rápidas (capítulo 16).</li>
+  </ul>
+</section>
+
+<section id="c4">
+  <h2>4. Cobrar: medios de pago, fiado, ticket y factura</h2>
+  <h3>4.1 La ventana de cobro</h3>
+  <p>Al tocar <strong>Cobrar</strong> se abre "Cobrar $ total". A la derecha se elige el medio de pago; a la izquierda se ve el detalle y, en efectivo, el monto recibido con billetes sugeridos y el cambio.</p>
+  <div class="tablewrap"><table>
+    <tr><th>Medio</th><th>Cómo funciona</th></tr>
+    <tr><td>Efectivo</td><td>Escribí lo que entrega el cliente o tocá un billete sugerido. Enter con el monto exacto confirma.</td></tr>
+    <tr><td>Débito / Crédito</td><td>Para cobros con tu terminal de tarjetas. Puede llevar recargo.</td></tr>
+    <tr><td>QR MP</td><td>Cobro con código QR de Mercado Pago.</td></tr>
+    <tr><td>Transferencia</td><td>Transferencia bancaria o al CVU. Ideal combinarlo con "Esperar cobro" y dejar que Mercado Pago la confirme.</td></tr>
+    <tr><td>Fiado</td><td>Se anota en la cuenta corriente de un cliente (4.3).</td></tr>
+    <tr><td>Varias formas de pago</td><td>Repartir el total entre dos o más medios.</td></tr>
+  </table></div>
+  <h3>4.2 Recargos</h3>
+  <p>Si en Administración → Recargos cargaste un porcentaje para algún medio, el botón lo muestra (por ejemplo "+3%") y el total se recalcula antes de confirmar.</p>
+  <h3>4.3 Fiado (cuenta corriente)</h3>
+  <ol>
+    <li>Elegí <strong>Fiado</strong> y buscá al cliente, o crealo en el momento con nombre y teléfono.</li>
+    <li>KioMind controla el límite de crédito del cliente y avisa si lo supera.</li>
+    <li>Al confirmar, la deuda queda vinculada a la venta. Los cobros de deuda se registran en Administración → Clientes.</li>
+  </ol>
+  <h3>4.4 Cliente en una venta común</h3>
+  <p>El botón <strong>Cliente</strong> permite asociar un comprador sin que sea fiado, útil para tickets con nombre o facturas.</p>
+  <h3>4.5 Ticket, Factura X y comprobante fiscal</h3>
+  <ul>
+    <li><strong>Imprimir ticket al confirmar</strong>: ticket no fiscal con los ítems y el total.</li>
+    <li><strong>Factura X</strong>: comprobante interno sin validez fiscal.</li>
+    <li><strong>Factura C</strong> (o A/B según tu condición): factura electrónica real con CAE de ARCA, disponible cuando la facturación está configurada (capítulo 14). Con la opción automática, los cobros por transferencia, QR y tarjeta se facturan solos dentro del límite que definas.</li>
+  </ul>
+  <p>Después de cobrar, abajo aparece el resumen de la última venta y el botón para <strong>Imprimir ticket</strong> otra vez.</p>
+</section>
+
+<section id="c5">
+  <h2>5. Mercado Pago en el mostrador</h2>
+  <h3>5.1 Conectar</h3>
+  <p>En <em>Administración → Mercado Pago</em> pegá el <strong>Access Token</strong> de tu cuenta (se obtiene en Mercado Pago → Tus integraciones, el manual tiene una guía paso a paso en esa pantalla). El token se guarda solo en esa PC. Una vez conectado no hace falta volver a pegarlo.</p>
+  <h3>5.2 Avisos en vivo</h3>
+  <p>KioMind consulta Mercado Pago solo, cada 5 segundos mientras el programa está abierto, y avisa al instante en el POS cuando entra una transferencia, un pago con QR, tarjeta o terminal Point. El aviso muestra monto, canal, quién pagó y la hora, y suena una notificación. En la ventana de Mercado Pago de Administración se ve la hora de la última sincronización y el historial de ingresos.</p>
+  <h3>5.3 Registro automático de ventas en espera</h3>
+  <p>Si una venta quedó en <strong>Esperar cobro</strong> y entra un pago de Mercado Pago por el mismo importe (incluido el recargo del medio), la venta se completa sola y queda enlazada al pago. Aparece una franja verde "Registrado el pago" con opciones para confirmar, revertir o informar un error. Se puede desactivar en Administración → Mercado Pago.</p>
+  <h3>5.4 Pagos MP de hoy</h3>
+  <p>En el carrito, el ícono de flechas abre la lista de todos los ingresos del día, con el canal, el estado y el enlace a la venta si ya se registró. Cada aviso se puede marcar como leído desde cualquier pantalla.</p>
+</section>
+
+<section id="c6">
+  <h2>6. Caja, turnos y relevos</h2>
+  <h3>6.1 Panel de caja en el POS</h3>
+  <ul>
+    <li><strong>Resumen</strong>: efectivo teórico, ventas por medio de pago, vales de envases y movimientos.</li>
+    <li><strong>Movimientos</strong>: <em>Retiro de caja</em> (sangría), <em>Ingreso extra</em> y gastos chicos con su motivo.</li>
+    <li><strong>Cerrar caja</strong>: contás el efectivo final, KioMind muestra la diferencia con lo esperado y guarda una nota de cierre. Al cerrar, el programa te propone abrir la caja del turno siguiente.</li>
+    <li><strong>Historial</strong>: cajas del día con cajero, horario y totales.</li>
+  </ul>
+  <p>Si WhatsApp está vinculado, al abrir y al cerrar la caja el dueño recibe un mensaje con el resumen (capítulo 15).</p>
+  <h3>6.2 Turnos</h3>
+  <p>En <em>Administración → Turnos</em> se definen los turnos con nombre y horario (por ejemplo Mañana 06:00 a 14:00, Tarde 14:00 a 22:00, Noche 22:00 a 06:00). El <strong>día operativo</strong> del kiosco va de 06:00 a 06:00, así el turno noche queda entero en el día que corresponde en los informes.</p>
+  <h3>6.3 Relevos y control de llegada</h3>
+  <p>En <em>Administración → Horarios</em> se arma la grilla de quién cubre cada turno cada día, la tolerancia de espera y cómo se cuentan las demoras (en escalones de 15 minutos). En el POS, a la hora de inicio del turno aparece el aviso de relevo: hasta que la persona que llega ponga su contraseña, el cajero anterior sigue vendiendo con su usuario. Al confirmar, el cajero de la caja pasa a ser quien llegó; la caja, el turno y los montos no cambian. El sistema anota la hora real de llegada y el tiempo que una persona le debe a la otra.</p>
+  <h3>6.4 Arqueo y caja en Administración</h3>
+  <p><em>Administración → Caja</em> muestra la caja actual, permite hacer un <strong>arqueo</strong> parcial y revisar el historial completo con filtros por fecha, turno y cajero.</p>
+</section>
+
+<section id="c7">
+  <h2>7. Envases, SUBE y cigarrillos sueltos</h2>
+  <h3>7.1 Envases retornables y vales</h3>
+  <p>El botón <strong>Envases</strong> del encabezado abre el contador de envases:</p>
+  <ul>
+    <li><strong>Dar vale y cobrar en venta</strong>: agrega un vale al carrito; el dinero va a la caja de envases, separada de las ventas.</li>
+    <li><strong>Prestar envase</strong> sin costo, con el teléfono del cliente; si WhatsApp está vinculado, se le puede recordar cada 24 horas.</li>
+    <li>Lista con filtros: Pendientes, Vencidos, Prestados y Devueltos. <strong>Devolver</strong> actualiza el saldo.</li>
+  </ul>
+  <p>Al vender un producto marcado como retornable (por ejemplo cerveza en botella) puede aparecer una pregunta para registrar el envase que devuelve el cliente o la salida del envase nuevo. Los tipos de envase y el valor del vale se configuran en <em>Administración → Envases</em>.</p>
+  <h3>7.2 SUBE</h3>
+  <p>El botón <strong>SUBE</strong> lleva una caja aparte: se abre con un efectivo inicial (con la caja del turno abierta), se registran las <strong>cargas</strong> a las tarjetas y los <strong>retiros</strong> de esa caja. El saldo es la última apertura más las cargas menos los retiros desde entonces. No se mezcla con las ventas ni con la caja común, y tiene su propio informe.</p>
+  <h3>7.3 Cigarrillos sueltos</h3>
+  <p>En la pestaña <strong>Sueltos</strong> hay casilleros numerados. Cada uno se configura con el atado de origen, el precio por unidad y las unidades por atado; al abrir un atado se descuenta uno del stock del producto. Tocar un casillero agrega un cigarrillo al carrito; cuando el atado se termina, KioMind pregunta si abrís otro. El impuesto interno y el IVA de las carpetas de tabaco se configuran en Inventario (capítulo 8.4).</p>
+</section>
+
+<section id="c8">
+  <h2>8. Inventario: productos, carpetas y precios</h2>
+  <h3>8.1 La pantalla</h3>
+  <p><em>Administración → Inventario</em> muestra las <strong>carpetas</strong> a la izquierda (con subcarpetas, por ejemplo Bebidas → Coca-Cola) y los productos a la derecha, con costo, venta, ganancia y stock. Arriba: buscador, <strong>Nuevo producto</strong>, Exportar, Factura OCR, Importar, Catálogo KioMind e Imprimir. También se puede abrir Inventario como ventana flotante desde el POS.</p>
+  <h3>8.2 Crear o editar un producto</h3>
+  <ul>
+    <li><strong>Nombre, código de barras (EAN) y código interno.</strong> El código interno sirve para escribirlo rápido en el buscador del POS.</li>
+    <li><strong>Carpeta</strong> donde se muestra en el POS.</li>
+    <li><strong>Costo, margen % y precio de venta.</strong> Cambiando el margen se recalcula el precio; también se puede escribir el precio directo. Cada cambio queda en el historial de precios del producto.</li>
+    <li><strong>Precio por lista</strong>: si usás Mayorista o Turno noche, cada lista puede tener su precio.</li>
+    <li><strong>IVA</strong> y, en carpetas de cigarrillos, impuesto interno por unidad.</li>
+    <li><strong>Stock, stock mínimo</strong> (para el aviso de stock bajo) y proveedor habitual.</li>
+    <li><strong>Foto o emoji</strong>. Las fotos se reducen automáticamente al tamaño ideal para el POS, así que podés usar la cámara del celular sin problema.</li>
+    <li><strong>Envase</strong>: si es retornable, cuál sale con la venta y cuáles se aceptan de vuelta.</li>
+    <li><strong>Estrella</strong> para que aparezca en Favoritos.</li>
+  </ul>
+  <h3>8.3 Carpetas</h3>
+  <p>Con <strong>Raíz</strong> y <strong>Subcarpeta</strong> se arma el árbol. Doble clic renombra, y con los íconos se ordenan y se borran. Una carpeta se puede marcar como carpeta de tabaco para aplicar el impuesto a todos sus productos.</p>
+  <h3>8.4 Listas de precios</h3>
+  <p>En el administrador de listas se crean listas con un ajuste porcentual sobre el precio base (por ejemplo Mayorista −8 %, Turno noche +10 %). En el POS se elige la lista activa con el selector del encabezado; se puede fijar una lista distinta por turno.</p>
+  <h3>8.5 Exportar e importar</h3>
+  <ul>
+    <li><strong>Exportar → Tabla en Excel (.csv), texto o PDF</strong>: listados para revisar precios o imprimir.</li>
+    <li><strong>Importar</strong>: carga masiva desde Excel, CSV o texto, con revisión artículo por artículo antes de guardar.</li>
+    <li><strong>Factura OCR</strong>: sacale una foto o subí el PDF de la factura del proveedor y KioMind lee los renglones, los relaciona con tus productos (indicando si vienen por unidad o por pack), propone actualizar costos y precios y suma el stock. Antes de guardar pide confirmación si un costo sube más de 50 %.</li>
+  </ul>
+  <h3>8.6 Catálogo para otro kiosco</h3>
+  <p><strong>Exportar → Para otro kiosco → Catálogo KioMind</strong> (con o sin fotos) genera un archivo <code>.kiomind-catalogo</code> con las carpetas, los productos, los precios, las listas, los impuestos y los envases, <strong>sin stock ni datos del negocio</strong>. En el otro kiosco, <strong>Catálogo KioMind</strong> lo carga: en un inventario vacío deja todo igual al archivo; en uno que ya tiene productos, la opción <em>Completar</em> agrega solo lo que falta sin tocar precios ni stock existentes.</p>
+  <h3>8.7 Solo lectura</h3>
+  <p>Un usuario con permiso de Inventario pero sin el sub-permiso <em>Modificar</em> ve productos, precios y stock, puede abrir fichas e imprimir, pero no puede cambiar nada. Útil para que un cajero consulte precios sin riesgo.</p>
+</section>
+
+<section id="c9">
+  <h2>9. Stock y proveedores</h2>
+  <h3>9.1 Cómo se mueve el stock</h3>
+  <ul>
+    <li>Cada venta descuenta stock; anular una venta lo devuelve.</li>
+    <li>Los ajustes manuales (desde Inventario, Stock o el POS) quedan en el historial de stock con quién lo hizo y el motivo.</li>
+    <li>La importación de facturas suma el stock recibido con origen "factura".</li>
+    <li>Abrir un atado para sueltos descuenta uno del producto.</li>
+  </ul>
+  <h3>9.2 Módulo Stock</h3>
+  <p><em>Administración → Stock</em> permite ajustar existencias en lote, ver los productos en stock bajo o agotados, controlar el stock de envases (vacíos y llenos) y configurar <strong>Auto Stock</strong>: qué productos preguntar y cada cuánto, para que el POS lo consulte al cajero en los momentos tranquilos. Si WhatsApp está vinculado, el dueño puede recibir un aviso con el resultado.</p>
+  <h3>9.3 Proveedores</h3>
+  <p><em>Administración → Proveedores</em> guarda distribuidores con contacto, las facturas importadas por OCR y los productos que trae cada uno. Sirve de base para pedidos y para el Auto Stock.</p>
+</section>
+
+<section id="c10">
+  <h2>10. Clientes y cuenta corriente</h2>
+  <p><em>Administración → Clientes</em> lista a cada cliente con su deuda actual, límite de crédito y teléfono.</p>
+  <ul>
+    <li><strong>Nuevo cliente</strong> con nombre, teléfono, límite de crédito y notas.</li>
+    <li><strong>Deudas</strong>: cada fiado aparece con la venta que lo originó. <strong>Registrar pago</strong> descuenta lo que el cliente entrega, en efectivo o por otro medio, y queda en la caja del turno.</li>
+    <li>Historial de pagos y de compras del cliente.</li>
+    <li>Si WhatsApp está vinculado, los clientes que escriben al número del kiosco quedan reconocidos por su teléfono.</li>
+  </ul>
+</section>
+
+<section id="c11">
+  <h2>11. Promociones y recargos</h2>
+  <h3>11.1 Promociones</h3>
+  <p><em>Administración → Promociones</em> tiene dos tipos:</p>
+  <ul>
+    <li><strong>Precio especial</strong>: un producto a un precio fijo (por ejemplo 2 × $1.500). Se aplica también cuando el producto se agrega desde su carpeta.</li>
+    <li><strong>Combo</strong>: varios productos juntos con un descuento que se reparte entre los ítems.</li>
+  </ul>
+  <p>Las promociones activas aparecen en la pestaña <strong>Promociones</strong> del POS.</p>
+  <h3>11.2 Recargos por medio de pago</h3>
+  <p><em>Administración → Recargos</em>: porcentaje extra para efectivo, débito, crédito, QR y transferencia. Se muestra en la ventana de cobro y se suma al total. Con recargo, el registro automático de Mercado Pago compara el importe con recargo incluido.</p>
+</section>
+
+<section id="c12">
+  <h2>12. Personal, sueldos y horarios</h2>
+  <h3>12.1 Ficha de cada empleado</h3>
+  <p><em>Administración → Personal y Sueldos</em> muestra a cada empleado con sus horas trabajadas (a partir de las entradas al POS y los relevos), bonos, descuentos, adelantos, horas extra y consumos.</p>
+  <ul>
+    <li><strong>Consumos del mes</strong>: tarjeta con el total, la cantidad de registros y el último consumo; el botón <strong>Ver consumos</strong> abre el detalle por día, con buscador y la pestaña de consumos dados de baja con su motivo. Los consumos se registran desde el POS cuando un empleado se lleva un producto.</li>
+    <li><strong>Adelantos</strong> pedidos y aprobados, <strong>bonos</strong> y <strong>descuentos</strong> con motivo.</li>
+    <li><strong>Liquidación</strong>: resumen del período con horas, valor hora, extras, descuentos y neto a pagar, listo para imprimir.</li>
+    <li><strong>Ranking y puntos</strong> de los vendedores según ventas.</li>
+  </ul>
+  <h3>12.2 Configuración de sueldos</h3>
+  <p>Perfil de pago por empleado (valor hora o mensual, día de pago) y configuración global (recargo de horas extra, escalones de tardanza).</p>
+  <h3>12.3 Horarios y demoras</h3>
+  <p><em>Administración → Horarios</em>: grilla semanal de quién cubre cada turno, tolerancia de espera y cómo se descuentan las llegadas tarde. El historial de relevos muestra la hora real de llegada de cada uno y el tiempo que le debe al compañero que esperó.</p>
+</section>
+
+<section id="c13">
+  <h2>13. Informes e historial de ventas</h2>
+  <h3>13.1 Informes</h3>
+  <p><em>Administración → Informes</em>. Arriba, los filtros: período (hoy, 7 días, 30 días, este mes, este año, todo el historial o fechas a medida), vendedor, turno, producto y carpeta. A la izquierda, las secciones:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Sección</th><th>Qué muestra</th></tr>
+    <tr><td>Ventas</td><td>Facturación, tickets, ticket promedio, ganancia estimada y gráfico por día u hora.</td></tr>
+    <tr><td>Resultados</td><td>Ganancia por producto y carpeta, márgenes.</td></tr>
+    <tr><td>Stock</td><td>Stock valorizado, productos en stock bajo, rotación.</td></tr>
+    <tr><td>SUBE, Cuenta corriente, Productos, Caja, Envases, Pedidos por cliente</td><td>Detalle de cada área.</td></tr>
+    <tr><td>Informe ventas diarias, mensuales, anuales, por producto y por usuario</td><td>Informes completos con <strong>Ver informe</strong>, <strong>Descargar PDF</strong> y <strong>Enviar por WhatsApp</strong>.</td></tr>
+  </table></div>
+  <p><strong>Enviar por WhatsApp</strong> abre la lista de administradores vinculados, permite agregar otro número y manda el PDF desde el kiosco. Los mismos informes se pueden pedir desde el celular (capítulo 15).</p>
+  <h3>13.2 Historial de ventas</h3>
+  <p><em>Administración → Historial de ventas</em>: todas las ventas con fecha, turno, vendedor, medio de pago, ítems y estado (completada o anulada). Se filtra por período y se puede reimprimir el ticket o la factura.</p>
+  <h3>13.3 Anular una venta</h3>
+  <p>Desde el historial del POS (ícono de reloj en el carrito) o desde Historial de ventas: <strong>Anular</strong> pide un motivo de al menos 5 caracteres. Devuelve el stock, revierte el fiado y los envases, y la venta queda marcada como anulada sin desaparecer del registro.</p>
+</section>
+
+<section id="c14">
+  <h2>14. Facturación electrónica (ARCA / AFIP)</h2>
+  <p><em>Administración → Facturación</em> tiene un asistente en seis pasos: <strong>Inicio → Tu negocio → Punto de venta → Certificados → Probar → Listo</strong>.</p>
+  <ol>
+    <li><strong>Tu negocio</strong>: CUIT, razón social, condición frente al IVA (monotributo o responsable inscripto), domicilio e inicio de actividades.</li>
+    <li><strong>Punto de venta</strong>: el número de punto de venta habilitado en ARCA para "Factura Electrónica, Web Services".</li>
+    <li><strong>Certificados</strong>: se generan la clave privada y la solicitud (CSR) desde el asistente, se sube la solicitud en el sitio de ARCA, se descarga el certificado y se carga acá. Se autoriza el servicio de facturación electrónica (wsfe) a ese certificado.</li>
+    <li><strong>Probar</strong>: KioMind se conecta, verifica el último comprobante y muestra el estado. Se puede trabajar en homologación (pruebas) antes de pasar a producción.</li>
+  </ol>
+  <h3>14.1 Facturación automática y límites</h3>
+  <p>En <strong>Límites de facturación</strong> se define un tope mensual de importe o cantidad, y la opción <strong>Facturar automáticamente ventas por transferencia, QR y tarjetas</strong>. Con eso, esos cobros salen con CAE sin que el cajero haga nada, hasta llegar al tope; el panel de estado muestra cuánto se lleva facturado y por qué se detuvo si algo falla. Los cobros en efectivo se facturan a pedido, desde la ventana de cobro.</p>
+  <div class="note"><strong>Importante.</strong> El certificado de ARCA queda guardado solo en esa PC. No copies la carpeta de datos a otra máquina ni compartas instaladores "con datos" con terceros.</div>
+</section>
+
+<section id="c15">
+  <h2>15. WhatsApp: reportes y control desde el celular</h2>
+  <h3>15.1 Vincular</h3>
+  <p><em>Administración → WhatsApp</em>. Con un número de WhatsApp (o WhatsApp Business) para el kiosco, escaneá el código QR desde el celular igual que en WhatsApp Web. La sesión queda guardada en la PC y se reconecta sola al abrir KioMind. Los administradores se toman de los teléfonos cargados en <em>Usuarios</em> o se agregan a mano.</p>
+  <h3>15.2 Qué manda solo el kiosco</h3>
+  <ul>
+    <li><strong>Aviso al abrir caja</strong> y <strong>reporte al cerrar caja</strong> (formato configurable).</li>
+    <li><strong>Informe mensual en PDF</strong> al terminar el mes.</li>
+    <li><strong>Auto Stock</strong>: resultado de los conteos.</li>
+    <li><strong>Recordatorio de envase prestado</strong> al cliente, cada 24 horas.</li>
+    <li><strong>Código de equipo</strong> cuando falta la licencia.</li>
+  </ul>
+  <h3>15.3 Lo que podés pedir desde tu celular</h3>
+  <p>Escribile al número del kiosco desde un teléfono de administrador:</p>
+  <div class="tablewrap"><table>
+    <tr><th>Escribís</th><th>Recibís</th></tr>
+    <tr><td><code>informe</code> o <code>menu</code></td><td>Menú: 1 ventas del día, 2 del mes, 3 del año, 4 cajas del día, 5 un producto, 6 un vendedor, 7 estado del kiosco, 8 precio/stock, 9 ventas entre dos fechas, 10 valor del inventario.</td></tr>
+    <tr><td><code>informe hoy</code>, <code>informe 26/06/2026</code></td><td>Informe diario en PDF.</td></tr>
+    <tr><td><code>informe del mes</code>, <code>informe septiembre</code>, <code>informe 08/2026</code>, <code>informe mes pasado</code></td><td>Informe mensual en PDF.</td></tr>
+    <tr><td><code>informe anual</code>, <code>informe 2025</code>, <code>informe año pasado</code></td><td>Informe anual en PDF.</td></tr>
+    <tr><td><code>informe 01/09 al 15/09</code>, <code>reporte ventas desde 1/9 hasta 15/9</code>, <code>informe últimos 15 días</code></td><td>Informe de ventas unificado de ese rango, con el mismo formato que el mensual.</td></tr>
+    <tr><td><code>valor stock</code>, <code>valor del inventario</code></td><td>Valor exacto de la mercadería a costo y a precio de venta, unidades y productos con stock.</td></tr>
+    <tr><td><code>producto marlboro este mes</code>, <code>producto coca últimos 30 días</code>, <code>producto camel 01/09 al 15/09</code></td><td>Informe del producto en ese período.</td></tr>
+    <tr><td><code>reporte cajas</code>, <code>reporte hoy</code></td><td>Cajas del día en el orden de los turnos.</td></tr>
+    <tr><td><code>precio marlboro</code>, <code>stock coca</code></td><td>Precio o stock actual del producto.</td></tr>
+    <tr><td><code>Mensaje: cerrar a las 22</code></td><td>Aviso urgente que aparece en el POS para los cajeros.</td></tr>
+    <tr><td><code>licencia</code> o <code>licencia KM1...</code></td><td>Estado de la licencia, o activa la licencia enviada.</td></tr>
+  </table></div>
+  <h3>15.4 Clientes y pedidos</h3>
+  <p>Con <strong>Responder a clientes</strong> activado, quien escribe al kiosco recibe una respuesta automática y puede dejar un pedido; el pedido aparece en el POS para prepararlo. Un cajero puede tomar la conversación a mano en cualquier momento. Con <strong>Asistente IA en WhatsApp</strong>, las consultas de precios y disponibilidad se responden solas.</p>
+</section>
+
+<section id="c16">
+  <h2>16. Asistente con inteligencia artificial</h2>
+  <p><em>Administración → Asistente</em>. Con una clave de Google AI Studio (Gemini), gratuita para uso normal, se activa el asistente:</p>
+  <ul>
+    <li><strong>Chat en el POS</strong>: consultas rápidas sobre ventas del día, stock, fiados, o pedirle que arme una factura de proveedor con una foto.</li>
+    <li><strong>Lectura de facturas (OCR)</strong> en Inventario, para actualizar costos y stock sin tipear.</li>
+    <li><strong>Respuestas en WhatsApp</strong> a clientes, si lo activás.</li>
+  </ul>
+  <p>Se puede elegir el nombre del asistente, si se muestra en el POS y dónde aparece su botón.</p>
+</section>
+
+<section id="c17">
+  <h2>17. Usuarios y permisos</h2>
+  <p><em>Administración → Usuarios</em>. Cada persona tiene su usuario, contraseña, rol (Administrador o Cajero) y, si querés, teléfono para recibir reportes de WhatsApp.</p>
+  <ul>
+    <li><strong>Administrador</strong>: acceso a todo.</li>
+    <li><strong>Cajero</strong>: por defecto solo el POS. Con <strong>Personalizar permisos</strong> le habilitás módulos de Administración uno por uno: Inventario (con o sin <em>Modificar precios, productos, stock y carpetas</em>), Clientes, Informes, Caja, Turnos, etc. Al entrar a Administración ve únicamente lo que tiene permitido.</li>
+    <li>Un usuario se puede desactivar sin borrarlo, para conservar su historial.</li>
+  </ul>
+  <p>Cada venta, ajuste de stock, cambio de precio y movimiento de caja queda registrado con el usuario que lo hizo.</p>
+</section>
+
+<section id="c18">
+  <h2>18. Copias de seguridad y datos</h2>
+  <h3>18.1 Cómo se guarda la información</h3>
+  <p>KioMind guarda todo en la PC, en la carpeta de datos del programa (<code>%APPDATA%\KioMind\data</code>). Además hace copias internas continuas: cada venta se respalda al segundo y el catálogo completo cada 10 minutos. Los archivos se escriben de forma segura para resistir un corte de luz.</p>
+  <h3>18.2 Copia de seguridad automática</h3>
+  <p>Desde el ícono de <strong>auto-backup</strong> (abajo en el POS, o en Administración) se configura una copia <strong>diaria</strong> y una <strong>mensual</strong> a la hora que elijas, en la carpeta <code>%APPDATA%\KioMind\backups</code>. Conviene copiar esa carpeta cada tanto a un pendrive o a la nube.</p>
+  <h3>18.3 Pasar KioMind a otra PC</h3>
+  <ol>
+    <li>Instalá KioMind en la PC nueva y pedí su licencia (código de equipo nuevo).</li>
+    <li>Con KioMind cerrado en las dos máquinas, copiá la carpeta de datos de la PC vieja a la nueva.</li>
+    <li>Abrí KioMind: productos, ventas, caja y configuración aparecen tal cual. WhatsApp hay que vincularlo de nuevo en la PC nueva (la sesión no debe usarse en dos PCs a la vez).</li>
+  </ol>
+  <h3>18.4 Recuperación</h3>
+  <p>Si por algún motivo el catálogo aparece vacío o incompleto, KioMind revisa solo sus copias (navegador y disco) al arrancar y restaura la más completa. En Administración → Inventario también hay opciones de recuperación manual.</p>
+</section>
+
+<section id="c19">
+  <h2>19. Licencia y actualizaciones</h2>
+  <p><em>Administración → Sistema</em> (solo administradores):</p>
+  <ul>
+    <li><strong>Licencia</strong>: estado, código de equipo, nombre del kiosco, fecha y vencimiento. <strong>Cambiar licencia</strong> para cargar una nueva.</li>
+    <li><strong>Actualización de KioMind</strong>: <strong>Buscar actualización</strong> consulta si hay una versión nueva; <strong>Descargar</strong> la baja mientras seguís vendiendo; <strong>Reiniciar y actualizar</strong> cierra el programa, instala y lo vuelve a abrir en menos de un minuto. Los datos no se tocan. Hacelo en un momento sin una venta a medias.</li>
+  </ul>
+  <p>Al abrir por primera vez una versión nueva, KioMind puede hacer tareas de mantenimiento en segundo plano (por ejemplo, reducir el tamaño de las fotos). No hace falta esperar.</p>
+</section>
+
+<section id="c20">
+  <h2>20. Preguntas frecuentes y problemas comunes</h2>
+  <dl class="faq">
+    <dt>No puedo agregar productos al carrito.</dt>
+    <dd>La caja está cerrada. Tocá <strong>Caja</strong> y abrila con el turno y el efectivo inicial.</dd>
+    <dt>El lector de códigos no agrega nada.</dt>
+    <dd>Fijate que el producto tenga cargado el código de barras en Inventario. Si el lector escribe en otro lado, tocá una vez en la pantalla del POS: el buscador recupera el foco solo.</dd>
+    <dt>Entró una transferencia y no apareció el aviso.</dt>
+    <dd>Revisá el indicador <strong>Online</strong> del encabezado y, en Administración → Mercado Pago, la hora de la última sincronización. Si el token venció, volvé a pegarlo. <strong>Sincronizar ahora</strong> fuerza una consulta.</dd>
+    <dt>WhatsApp aparece desconectado.</dt>
+    <dd>En Administración → WhatsApp tocá reconectar; si pide QR, escanealo de nuevo. No uses la misma sesión en dos PCs: se desconectan entre sí.</dd>
+    <dt>El aviso de relevo aparece cuando no corresponde.</dt>
+    <dd>Revisá los horarios de los turnos en Administración → Turnos y la grilla de Horarios: el aviso sale a la hora de inicio del turno programado.</dd>
+    <dt>Falta la licencia después de cambiar la PC.</dt>
+    <dd>Es normal: el código de equipo es distinto. Pedí una licencia nueva con ese código; mientras tanto tenés días de prueba.</dd>
+    <dt>Un empleado cambió precios sin permiso.</dt>
+    <dd>En Usuarios, quitale el sub-permiso <em>Modificar</em> de Inventario. Va a poder ver precios pero no tocarlos.</dd>
+    <dt>La factura electrónica no sale.</dt>
+    <dd>En Facturación → estado, revisá si se llegó al límite mensual, si el certificado sigue vigente y si hay internet. Las ventas se cobran igual; la factura se puede emitir después.</dd>
+    <dt>Quiero empezar de cero el catálogo.</dt>
+    <dd>Inventario tiene la opción de vaciar el catálogo (solo administradores) y después cargar uno nuevo con Catálogo KioMind, Excel o a mano. Las ventas y la caja no se borran.</dd>
+    <dt>¿KioMind funciona sin internet?</dt>
+    <dd>Sí, para vender, cobrar, caja, stock e informes. Necesitan internet: avisos de Mercado Pago, WhatsApp, facturación electrónica, el asistente y las actualizaciones.</dd>
+  </dl>
+</section>
+
+<section id="c21">
+  <h2>21. Atajos y glosario</h2>
+  <h3>Atajos de teclado en el POS</h3>
+  <div class="tablewrap"><table>
+    <tr><th>Tecla</th><th>Acción</th></tr>
+    <tr><td>Enter (con ítems en el carrito)</td><td>Abre la ventana de cobro.</td></tr>
+    <tr><td>Enter en el buscador con una coincidencia</td><td>Agrega el producto.</td></tr>
+    <tr><td>Enter en efectivo con monto exacto</td><td>Confirma la venta.</td></tr>
+    <tr><td>Enter otra vez</td><td>Confirma con el monto ingresado.</td></tr>
+    <tr><td>Escape</td><td>Cierra la ventana abierta.</td></tr>
+  </table></div>
+  <h3>Glosario</h3>
+  <dl class="glossary">
+    <dt>Día operativo</dt><dd>Jornada del kiosco de 06:00 a 06:00 del día siguiente; así el turno noche entra completo en el día correcto.</dd>
+    <dt>Código de equipo</dt><dd>Identificador de la PC (KM-XXXX-XXXX) al que se ata la licencia.</dd>
+    <dt>Venta en espera</dt><dd>Venta que queda pendiente de cobro hasta que se confirma un pago electrónico.</dd>
+    <dt>Vale de envase</dt><dd>Importe que deja el cliente por un envase retornable; va a la caja de envases.</dd>
+    <dt>Auto Stock</dt><dd>Preguntas del POS en momentos tranquilos para actualizar el stock de productos elegidos.</dd>
+    <dt>CAE</dt><dd>Código de autorización electrónica que ARCA asigna a cada factura válida.</dd>
+    <dt>Access Token</dt><dd>Clave que Mercado Pago da para que KioMind consulte los pagos de tu cuenta.</dd>
+    <dt>Catálogo KioMind</dt><dd>Archivo con carpetas, productos y precios para cargar en otro kiosco, sin stock.</dd>
+  </dl>
+</section>
+
+<footer class="page-foot"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjQgNDAgMzcyIDQwMCIgd2lkdGg9IjM3MiIgaGVpZ2h0PSI0MDAiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iS2lvTWluZCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImttLWciIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMjAiIHkxPSI2MCIgeDI9IjM0MCIgeTI9IjQ0MCI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCIgc3RvcC1jb2xvcj0iIzM4YmRmOCIvPgogICAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiM4YjVjZjYiLz4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgPC9kZWZzPgogIDwhLS0gVG9sZG8gLS0+CiAgPHBhdGggZmlsbD0idXJsKCNrbS1nKSIgZD0iTTYyIDYyIEgyNzggTDMyMiAxMzggQTMwIDMwIDAgMCAxIDI2MiAxMzggQTMwIDMwIDAgMCAxIDIwMiAxMzggQTMwIDMwIDAgMCAxIDE0MiAxMzggQTMwIDMwIDAgMCAxIDgyIDEzOCBBMzAgMzAgMCAwIDEgMjIgMTM4IFoiLz4KICA8IS0tIExvY2FsOiBsYWRvIGl6cXVpZXJkbyB5IHBpc287IGEgbGEgZGVyZWNoYSBsbyBpbnRlcnJ1bXBlIGVsIGNlcmVicm8gLS0+CiAgPGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSJ1cmwoI2ttLWcpIiBzdHJva2Utd2lkdGg9IjIwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgPHBhdGggZD0iTTYwIDE3MiBWMzg2IFE2MCA0MDYgODAgNDA2IEgyMTQiLz4KICAgIDxwYXRoIGQ9Ik0yODAgMTcyIFYyMDYiLz4KICA8L2c+CiAgPCEtLSBDZXJlYnJvIC0tPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNrbS1nKSIgc3Ryb2tlLXdpZHRoPSIxNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj4KICAgIDxwYXRoIGQ9Ik0xOTYgMzU2IEMxNjggMzQ4IDE2NCAzMDYgMTkwIDI5NiBDMTc0IDI2NiAyMDAgMjQwIDIyOCAyNTAgQzI0MCAyMTggMjgyIDIxNCAyOTIgMjQ0IEMzMjIgMjMyIDM0OCAyNjIgMzM0IDI5MiBDMzU2IDMxMCAzNDggMzUyIDMxOCAzNTYgQzMyMiAzODYgMjg2IDQwMCAyNjYgMzgyIEMyNTQgNDA0IDIxNiA0MDAgMjA4IDM3NiBDMTkwIDM4NCAxODIgMzY4IDE5NiAzNTYgWiIvPgogICAgPCEtLSBUcm9uY28geSBjaXJjdWl0b3MgLS0+CiAgICA8cGF0aCBkPSJNMjU0IDI1OCBWNDIwIi8+CiAgICA8cGF0aCBkPSJNMjU0IDI5NiBIMjg2IFYyNzgiLz4KICAgIDxwYXRoIGQ9Ik0yNTQgMzI2IEgyMjAgVjMwOCIvPgogICAgPHBhdGggZD0iTTI4NiAzMzIgSDMwNiIvPgogICAgPHBhdGggZD0iTTIzNCAzNTIgSDI1NCIvPgogIDwvZz4KICA8IS0tIE5vZG9zIC0tPgogIDxnIGZpbGw9Im5vbmUiIHN0cm9rZT0idXJsKCNrbS1nKSIgc3Ryb2tlLXdpZHRoPSI5Ij4KICAgIDxjaXJjbGUgY3g9IjI1NCIgY3k9IjI1MCIgcj0iOSIvPgogICAgPGNpcmNsZSBjeD0iMjg2IiBjeT0iMjcwIiByPSI5Ii8+CiAgICA8Y2lyY2xlIGN4PSIyMjAiIGN5PSIzMDAiIHI9IjkiLz4KICAgIDxjaXJjbGUgY3g9IjMxNCIgY3k9IjMzMiIgcj0iOSIvPgogICAgPGNpcmNsZSBjeD0iMjI2IiBjeT0iMzUyIiByPSI5Ii8+CiAgPC9nPgo8L3N2Zz4K" alt="" /> KioMind · Manual de usuario · Versión 0.2.1 · Septiembre 2026</footer>
+
+  </div>
+</div>
+<script>
+(function(){
+  var links=[].slice.call(document.querySelectorAll(".side nav a"));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));}).filter(Boolean);
+  function mark(){
+    var y=window.scrollY+140;var cur=secs[0];
+    for(var i=0;i<secs.length;i++){if(secs[i].offsetTop<=y)cur=secs[i];}
+    links.forEach(function(a){a.classList.toggle("active",cur&&a.getAttribute("href")==="#"+cur.id);});
+  }
+  window.addEventListener("scroll",mark,{passive:true});mark();
+})();
+</script>

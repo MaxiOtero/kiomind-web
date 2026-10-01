@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KioMind · Sistema de gestión y punto de venta para kioscos</title>
+  <meta name="description" content="KioMind es el programa para kioscos, maxikioscos y despensas: punto de venta rápido, caja y turnos, Mercado Pago en vivo, WhatsApp, facturación electrónica ARCA y carga de facturas con IA. Pago único, sin mensualidades." />
+  <meta property="og:title" content="KioMind · Tu kiosco, gestionado con inteligencia" />
+  <meta property="og:description" content="Punto de venta, caja, stock, Mercado Pago, WhatsApp y facturación electrónica en un solo programa para kioscos." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://kiomind.com.ar/" />
+  <meta property="og:image" content="https://kiomind.com.ar/img/pos.png" />
+  <meta name="theme-color" content="#0f1419" />
+  <link rel="icon" href="img/kiomind-logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" />
+  <style>
+    :root{
+      color-scheme:dark;
+      --surface:#0f1419;--card:#1a2332;--elevated:#243044;
+      --primary:#312e81;--accent:#38bdf8;--light:#8b5cf6;
+      --ink:#f1f5f9;--muted:rgba(241,245,249,.66);--faint:rgba(241,245,249,.42);
+      --line:rgba(255,255,255,.09);--line-strong:rgba(56,189,248,.35);
+      --green:#34d399;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+    body{margin:0;background:var(--surface);color:var(--ink);font-family:"Inter","Segoe UI",system-ui,-apple-system,Roboto,sans-serif;font-size:17px;line-height:1.6;
+      background-image:radial-gradient(1000px 520px at 12% -8%,rgba(139,92,246,.24),transparent 60%),radial-gradient(800px 420px at 92% 4%,rgba(56,189,248,.18),transparent 60%);background-repeat:no-repeat}
+    a{color:var(--accent)}
+    img{max-width:100%;height:auto}
+    .wrap{max-width:1180px;margin:0 auto;padding-inline:20px}
+    .gradient-text{background:linear-gradient(90deg,var(--accent),var(--light));-webkit-background-clip:text;background-clip:text;color:transparent}
+    h1,h2,h3{text-wrap:balance;letter-spacing:-.02em;font-weight:800;margin:0}
+    h2{font-size:clamp(28px,4vw,40px)}
+    .kicker{margin:0 0 10px;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:var(--accent)}
+    .sub{color:var(--muted);max-width:64ch;margin:12px 0 0;font-size:18px}
+    section{padding-block:72px}
+    @media (max-width:700px){section{padding-block:52px}}
+
+    /* nav */
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(15,20,25,.78);border-bottom:1px solid var(--line)}
+    .nav .wrap{display:flex;align-items:center;gap:18px;min-height:66px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:800;font-size:22px}
+    .brand img{height:38px;width:auto}
+    .nav-links{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:14.5px;font-weight:600;padding:8px 12px;border-radius:10px}
+    .nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.06)}
+    .nav-links a.cta{background:linear-gradient(90deg,var(--accent),var(--light));color:#0f1419}
+    @media (max-width:820px){.nav-links a:not(.cta):not(.keep){display:none}}
+
+    /* hero */
+    .hero{padding-block:64px 40px}
+    .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:center}
+    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}}
+    .hero h1{font-size:clamp(40px,6vw,66px);line-height:1.02}
+    .hero .lead{font-size:20px;color:var(--muted);max-width:56ch;margin:18px 0 26px}
+    .ctas{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;border-radius:14px;font-weight:700;text-decoration:none;font-size:16px;border:1px solid transparent;transition:transform .15s}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),var(--light));color:#0f1419}
+    .btn.ghost{border-color:var(--line-strong);color:var(--ink);background:rgba(15,20,25,.5)}
+    .btn.wa{background:#25d366;color:#062b16}
+    .trust{display:flex;flex-wrap:wrap;gap:18px;margin-top:26px;color:var(--faint);font-size:14px}
+    .trust span::before{content:"✓ ";color:var(--green)}
+    .shot{position:relative;border-radius:18px;overflow:hidden;border:1px solid var(--line-strong);box-shadow:0 30px 80px rgba(0,0,0,.55);background:var(--card)}
+    .shot img{display:block;width:100%}
+    .float{position:absolute;right:16px;bottom:16px;background:rgba(15,20,25,.88);border:1px solid var(--line-strong);border-radius:14px;padding:10px 14px;font-size:14px;backdrop-filter:blur(6px)}
+    .float b{display:block;color:var(--green);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+
+    /* stats strip */
+    .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px}
+    @media (max-width:800px){.strip{grid-template-columns:repeat(2,1fr)}}
+    .strip div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+    .strip b{display:block;font-size:26px;letter-spacing:-.02em}
+    .strip span{color:var(--muted);font-size:14px}
+
+    /* features */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+    @media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:560px){.grid{grid-template-columns:1fr}}
+    .feat{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 22px 18px;transition:border-color .15s,transform .15s}
+    .feat:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+    .feat svg{width:30px;height:30px;stroke:url(#g);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .feat h3{font-size:18px;margin:12px 0 6px}
+    .feat p{margin:0;color:var(--muted);font-size:15.5px}
+
+    /* gallery */
+    .gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px}
+    @media (max-width:760px){.gallery{grid-template-columns:1fr}}
+    .g{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;cursor:zoom-in}
+    .g img{display:block;width:100%;border-bottom:1px solid var(--line)}
+    .g figcaption{padding:12px 16px 14px;font-size:14.5px;color:var(--muted)}
+    .g figcaption b{color:var(--ink);display:block;margin-bottom:2px}
+    .lightbox{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out}
+    .lightbox.open{display:flex}
+    .lightbox img{max-width:min(1400px,96vw);max-height:92vh;border-radius:12px;border:1px solid var(--line-strong)}
+
+    /* steps */
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px;counter-reset:step}
+    @media (max-width:800px){.steps{grid-template-columns:1fr}}
+    .step{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;counter-increment:step;position:relative}
+    .step::before{content:counter(step);display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--light));color:#0f1419;font-weight:800;margin-bottom:12px}
+    .step h3{font-size:18px;margin-bottom:6px}
+    .step p{margin:0;color:var(--muted);font-size:15.5px}
+
+    /* audience + reqs */
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px}
+    @media (max-width:800px){.two{grid-template-columns:1fr}}
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px}
+    .panel h3{font-size:20px;margin-bottom:10px}
+    .panel ul{margin:0;padding-left:20px;color:var(--muted)}
+    .panel li{margin-bottom:6px}
+    .panel li::marker{color:var(--accent)}
+
+    /* faq */
+    details{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:6px 18px;margin-top:10px}
+    summary{cursor:pointer;font-weight:700;padding:10px 0;list-style:none;display:flex;justify-content:space-between;gap:12px}
+    summary::after{content:"+";color:var(--accent);font-size:22px;line-height:1}
+    details[open] summary::after{content:"−"}
+    details p{margin:0 0 12px;color:var(--muted)}
+
+    /* cta */
+    .cta-box{background:linear-gradient(135deg,rgba(49,46,129,.6),rgba(26,35,50,.95));border:1px solid var(--line-strong);border-radius:28px;padding:44px;text-align:center}
+    .cta-box h2{margin-bottom:10px}
+    .cta-box p{color:var(--muted);max-width:60ch;margin:0 auto 22px}
+    .contact{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-top:18px;color:var(--faint);font-size:15px}
+    .contact code{background:rgba(56,189,248,.12);color:#bae6fd;padding:3px 9px;border-radius:8px;font-family:Consolas,monospace}
+
+    /* IA */
+    .ia-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:36px;align-items:center;margin-top:32px}
+    @media (max-width:900px){.ia-grid{grid-template-columns:1fr}}
+    .ia-steps{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}
+    .ia-steps li{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+    .ia-steps b{display:grid;place-items:center;flex:none;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--light));color:#0f1419;font-size:15px}
+    .ia-steps span{color:var(--muted);font-size:15.5px}
+    .ia-steps span strong{color:var(--ink)}
+    .badge{display:inline-block;background:rgba(52,211,153,.14);color:var(--green);border:1px solid rgba(52,211,153,.35);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;margin-bottom:14px}
+
+    /* precio */
+    .price-box{background:linear-gradient(135deg,rgba(49,46,129,.55),rgba(26,35,50,.95));border:1px solid var(--line-strong);border-radius:28px;padding:40px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:36px;align-items:center;margin-top:32px}
+    @media (max-width:860px){.price-box{grid-template-columns:1fr;padding:28px}}
+    .price{font-size:clamp(46px,7vw,74px);font-weight:800;letter-spacing:-.03em;line-height:1}
+    .price small{display:block;font-size:17px;font-weight:600;color:var(--muted);letter-spacing:0;margin-top:10px}
+    .price-tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+    .price-tags span{background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:600}
+    .price-tags span::before{content:"✓ ";color:var(--green)}
+    .includes{margin:0;padding:0;list-style:none;display:grid;gap:9px}
+    .includes li{display:flex;gap:10px;align-items:flex-start;color:var(--muted);font-size:15.5px}
+    .includes li::before{content:"✓";color:var(--green);font-weight:800;flex:none}
+    .price-note{color:var(--faint);font-size:13.5px;margin-top:14px}
+
+    footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--faint);font-size:14px}
+    footer .wrap{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+    footer a{color:var(--muted);text-decoration:none;margin-right:16px}
+    footer a:hover{color:var(--ink)}
+  </style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs></svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="img/kiomind-logo.svg" alt="" /><span>Kio<span class="gradient-text">Mind</span></span></a>
+    <nav class="nav-links">
+      <a href="#funciones">Funciones</a>
+      <a href="#ia">Carga con IA</a>
+      <a href="#capturas">Capturas</a>
+      <a href="#precio">Precio</a>
+      <a href="#como">Cómo empieza</a>
+      <a href="#faq">Preguntas</a>
+      <a class="keep" href="manual/">Manual</a>
+      <a class="cta" href="#descargar">Probar gratis</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker">Sistema para kioscos, maxikioscos y despensas</p>
+      <h1>Tu kiosco, <span class="gradient-text">gestionado con inteligencia.</span></h1>
+      <p class="lead">Cobrá en segundos, recibí las transferencias de Mercado Pago al instante, cargá la mercadería con una foto de la factura, mirá el cierre de caja en tu WhatsApp y facturá electrónicamente sin tocar nada. Todo en un solo programa, instalado en tu PC, que funciona aunque se corte internet.</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://github.com/MaxiOtero/kiomind-releases/releases/latest/download/KioMind-Setup.exe">Descargar y probar 7 días gratis</a>
+        <a class="btn ghost" href="#contacto">Hablar con nosotros</a>
+      </div>
+      <div class="trust">
+        <span>7 días de prueba sin compromiso</span>
+        <span>Pago único, sin mensualidades</span>
+        <span>Funciona sin internet</span>
+        <span>Se actualiza solo</span>
+        <span>Tus datos quedan en tu PC</span>
+        <span>Hecho en Argentina</span>
+      </div>
+    </div>
+    <figure class="shot" style="margin:0">
+      <img src="img/pos.png" alt="Punto de venta de KioMind con la grilla de productos, favoritos y carrito" width="1600" height="900" />
+      <div class="float"><b>Mercado Pago</b>Transferencia recibida · $ 5.200 · registrada sola</div>
+    </figure>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap strip">
+    <div><b>1 seg</b><span>por producto escaneado. Enter y cobraste.</span></div>
+    <div><b>5 seg</b><span>tarda en avisarte una transferencia de Mercado Pago.</span></div>
+    <div><b>0 clics</b><span>para facturar electrónicamente pagos con QR y tarjeta.</span></div>
+    <div><b>1 foto</b><span>de la factura del proveedor y la IA carga los productos.</span></div>
+  </div>
+</section>
+
+<section id="funciones">
+  <div class="wrap">
+    <p class="kicker">Funciones</p>
+    <h2>Todo lo que un kiosco necesita, sin vueltas</h2>
+    <p class="sub">Diseñado con kioscos reales, para atender rápido en el mostrador y controlar el negocio desde el celular.</p>
+    <div class="grid">
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M3 5h18v11H3z"/><path d="M8 20h8M12 16v4"/></svg><h3>Punto de venta veloz</h3><p>Lector de códigos, buscador inteligente, favoritos automáticos, carpetas, promociones y cigarrillos sueltos. Enter para cobrar.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M4 8h16v12H4z"/><path d="M4 12h16M8 8V5h8v3"/></svg><h3>Mercado Pago en vivo</h3><p>Aviso instantáneo cuando entra una transferencia, QR o Point. Si la venta estaba esperando el pago, se registra sola.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-13.5 7.8L3 21l1.2-4.5A9 9 0 1 1 21 12z"/></svg><h3>WhatsApp en tu bolsillo</h3><p>Apertura y cierre de caja, informes en PDF, stock y precios, avisos urgentes a los cajeros y pedidos de clientes.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 11h18M8 4h8"/></svg><h3>Caja, turnos y relevos</h3><p>Apertura con efectivo inicial, retiros, cierre con diferencia, arqueo y control de la hora en que llega cada empleado.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M6 3h9l5 5v13H6z"/><path d="M14 3v6h6M9 13h6M9 17h6"/></svg><h3>Facturación electrónica ARCA</h3><p>Factura C, A o B con CAE. Automática para pagos electrónicos hasta el tope mensual que vos definas.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="M12 13v8M3 8l9 5 9-5"/></svg><h3>Inventario con fotos</h3><p>Precios por lista, márgenes, stock mínimo, carga de facturas con una foto (IA) y catálogo listo para otro local.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4a3.5 3.5 0 0 1 0 7M21.5 20a6.5 6.5 0 0 0-5-6.3"/></svg><h3>Personal y sueldos</h3><p>Horas trabajadas, consumos, adelantos, bonos, descuentos y liquidación lista para imprimir.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><h3>Informes claros</h3><p>Ventas por día, mes y año, ganancia por producto y carpeta, stock valorizado, cuenta corriente, envases y SUBE.</p></div>
+      <div class="feat"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg><h3>Asistente con IA</h3><p>Preguntale por ventas, stock o fiados, mandale una foto de la factura del proveedor y deja que responda a clientes en WhatsApp.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="ia" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Inteligencia artificial</p>
+    <h2>Sacale una foto a la factura. La mercadería se carga sola.</h2>
+    <p class="sub">Olvidate de tipear producto por producto cuando llega el proveedor. KioMind lee la factura con inteligencia artificial y te deja todo listo para confirmar.</p>
+    <div class="ia-grid">
+      <div>
+        <span class="badge">Incluido en el programa</span>
+        <ol class="ia-steps">
+          <li><b>1</b><span><strong>Sacá la foto</strong> con el celular o subí el PDF que te mandó el proveedor. Sirve cualquier factura o remito.</span></li>
+          <li><b>2</b><span><strong>La IA lee cada renglón:</strong> producto, código, cantidad y costo. Reconoce si viene por unidad o por pack.</span></li>
+          <li><b>3</b><span><strong>Los relaciona con tu inventario.</strong> Lo que ya tenés se actualiza; lo que es nuevo se crea con su carpeta y su precio de venta según tu margen.</span></li>
+          <li><b>4</b><span><strong>Confirmás y listo:</strong> costos, precios y stock al día, la factura queda guardada en Proveedores y, si la pagaste en efectivo, sale de la caja. Si un costo sube más de 50 %, te avisa antes de aplicarlo.</span></li>
+        </ol>
+        <p style="margin:18px 0 0;color:var(--muted);font-size:15px">También desde el asistente del programa: adjuntale la foto en el chat y te la deja lista para revisar.</p>
+      </div>
+      <figure class="shot" style="margin:0"><img src="img/factura-ia.png" alt="Revisión producto por producto de una factura leída con inteligencia artificial" loading="lazy" width="1600" height="900" /><div class="float"><b>Factura leída</b>5 productos detectados · revisás uno por uno</div></figure>
+    </div>
+  </div>
+</section>
+
+<section id="capturas" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Capturas</p>
+    <h2>Así se ve KioMind</h2>
+    <p class="sub">Pantallas reales del programa. Tocá una imagen para verla grande.</p>
+    <div class="gallery">
+      <figure class="g" style="margin:0"><img src="img/pos.png" alt="Punto de venta" loading="lazy" width="1600" height="900" /><figcaption><b>Punto de venta</b>Favoritos, carpetas, carrito y ventas esperando cobro por transferencia.</figcaption></figure>
+      <figure class="g" style="margin:0"><img src="img/admin.png" alt="Panel de administración" loading="lazy" width="1600" height="900" /><figcaption><b>Administración</b>Resumen del día, caja abierta, facturación activa y todos los módulos.</figcaption></figure>
+      <figure class="g" style="margin:0"><img src="img/inventario.png" alt="Inventario" loading="lazy" width="1600" height="900" /><figcaption><b>Inventario</b>Carpetas, listas de precios, importación por Excel o por foto de factura.</figcaption></figure>
+      <figure class="g" style="margin:0"><img src="img/informes.png" alt="Informes" loading="lazy" width="1600" height="900" /><figcaption><b>Informes</b>Filtros por período, vendedor, turno y producto; envío por WhatsApp.</figcaption></figure>
+      <figure class="g" style="margin:0"><img src="img/caja.png" alt="Caja" loading="lazy" width="1600" height="900" /><figcaption><b>Caja</b>Turnos, movimientos, cierres y arqueo.</figcaption></figure>
+      <figure class="g" style="margin:0"><img src="img/stock.png" alt="Stock" loading="lazy" width="1600" height="900" /><figcaption><b>Stock</b>Existencias, stock bajo, envases y Auto Stock para no quedarte sin nada.</figcaption></figure>
+      <figure class="g" style="margin:0"><img src="img/factura-ia.png" alt="Carga de factura con inteligencia artificial" loading="lazy" width="1600" height="900" /><figcaption><b>Factura con IA</b>Una foto y los productos aparecen listos para confirmar, con costo y precio sugerido.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="como" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Cómo empieza</p>
+    <h2>En un día estás vendiendo</h2>
+    <div class="steps">
+      <div class="step"><h3>Descargás e instalás</h3><p>Un instalador para Windows y 7 días de prueba completos. Cuando te decidís, te damos la licencia de tu PC en minutos.</p></div>
+      <div class="step"><h3>Cargás tu catálogo</h3><p>Desde un Excel, con fotos de facturas, a mano o con un catálogo ya armado de otro kiosco, con carpetas y precios listos.</p></div>
+      <div class="step"><h3>Conectás y vendés</h3><p>Mercado Pago, WhatsApp y facturación se conectan desde el panel. Abrís la caja y a cobrar. Las actualizaciones llegan solas.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap two">
+    <div class="panel">
+      <h3>Para quién es</h3>
+      <ul>
+        <li>Kioscos y maxikioscos con mucho movimiento y varios turnos.</li>
+        <li>Despensas y almacenes que fían y llevan cuenta corriente.</li>
+        <li>Drugstores con cigarrillos, sueltos, envases retornables y SUBE.</li>
+        <li>Dueños que quieren controlar el negocio desde el celular sin estar en el local.</li>
+      </ul>
+    </div>
+    <div class="panel">
+      <h3>Requisitos mínimos</h3>
+      <ul>
+        <li>Windows 10 u 11 de 64 bits.</li>
+        <li>Procesador de doble núcleo (Core i3 / Ryzen 3 o mejor) y 4 GB de RAM (8 GB recomendados).</li>
+        <li>2 GB libres en disco, preferentemente SSD.</li>
+        <li>Pantalla de 1366 × 768 o más; táctil o con mouse.</li>
+        <li>Internet solo para Mercado Pago, WhatsApp, facturación electrónica, asistente y actualizaciones.</li>
+        <li>Opcional: lector de códigos USB e impresora de tickets de 58 u 80 mm.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="precio" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Precio</p>
+    <h2>Un solo pago. Es tuyo para siempre.</h2>
+    <p class="sub">Sin abono mensual, sin cobro por cantidad de ventas ni de productos, sin sorpresas.</p>
+    <div class="price-box">
+      <div>
+        <div class="price">$ 600.000<small>pago único · licencia de por vida por computadora</small></div>
+        <div class="price-tags"><span>Sin mensualidades</span><span>Actualizaciones incluidas</span><span>Todos los módulos</span></div>
+        <div class="ctas"><a class="btn primary" href="#descargar">Probar 7 días gratis</a><a class="btn ghost" href="#contacto">Consultar</a></div>
+        <p class="price-note">Precio en pesos argentinos, vigente a octubre de 2026. Se abona después de probar el programa.</p>
+      </div>
+      <div>
+        <h3 style="font-size:18px;margin-bottom:12px">Qué incluye</h3>
+        <ul class="includes">
+          <li>Punto de venta, caja, turnos, stock, inventario con fotos y promociones.</li>
+          <li>Mercado Pago en vivo, WhatsApp con informes y avisos, facturación electrónica ARCA.</li>
+          <li>Carga de facturas con inteligencia artificial y asistente para consultas.</li>
+          <li>Clientes y fiados, proveedores, personal y sueldos, informes completos.</li>
+          <li>Todas las actualizaciones futuras, con un botón dentro del programa.</li>
+          <li>Ayuda para instalar, pasar tu catálogo y conectar Mercado Pago, WhatsApp y ARCA.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <p class="kicker">Preguntas frecuentes</p>
+    <h2>Lo que nos preguntan siempre</h2>
+    <div style="margin-top:22px">
+      <details><summary>¿Cómo funciona la prueba de 7 días?</summary><p>Descargás e instalás KioMind y lo usás completo durante 7 días. Al terminar, el programa pide la licencia: nos mandás el código de equipo que muestra en pantalla y te la enviamos. Lo que cargaste en la prueba se conserva.</p></details>
+      <details><summary>¿Necesito internet para vender?</summary><p>No. Vender, cobrar, caja, stock e informes funcionan sin conexión. Internet hace falta solo para Mercado Pago, WhatsApp, facturación electrónica, el asistente y las actualizaciones.</p></details>
+      <details><summary>¿Dónde quedan mis datos?</summary><p>En tu propia PC, con copias de seguridad automáticas diarias y mensuales. Nadie más tiene acceso y no dependés de ningún servidor externo para trabajar.</p></details>
+      <details><summary>¿Funciona con mi lector de códigos y mi impresora?</summary><p>Sí, con cualquier lector USB en modo teclado y con impresoras de tickets de 58 u 80 mm. También imprime en impresoras comunes.</p></details>
+      <details><summary>¿Cómo me llegan las transferencias de Mercado Pago?</summary><p>Conectás tu cuenta una sola vez con el Access Token. KioMind consulta Mercado Pago cada 5 segundos y te avisa en pantalla con el nombre de quien pagó. Si la venta estaba en espera, se registra sola.</p></details>
+      <details><summary>¿Puedo facturar electrónicamente?</summary><p>Sí. Un asistente te guía para cargar el CUIT, el punto de venta y el certificado de ARCA. Podés dejar que facture automáticamente los pagos con QR, transferencia y tarjeta hasta un tope mensual.</p></details>
+      <details><summary>¿Qué pasa si cambio de computadora?</summary><p>Instalás KioMind en la nueva, pedís la licencia para esa PC y copiás la carpeta de datos. Todo aparece igual.</p></details>
+      <details><summary>¿Cuánto cuesta y cómo se paga?</summary><p>$ 600.000 por computadora, en un solo pago, y la licencia es para siempre. Primero probás el programa 7 días; si te sirve, lo pagás y te mandamos la licencia de tu equipo. No hay abono mensual ni costos por cantidad de ventas o productos.</p></details>
+      <details><summary>¿Tengo que pagar por las actualizaciones?</summary><p>No. Las mejoras están incluidas y llegan con un botón dentro del programa: "Buscar actualización", descargar y reiniciar. Sin técnicos ni pendrives.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="descargar" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-box">
+      <p class="kicker">Prueba gratis</p>
+      <h2>Probalo 7 días en tu kiosco, sin costo</h2>
+      <p>Descargás el instalador, lo instalás en tu PC con Windows y tenés el programa completo durante 7 días. Si te sirve, nos escribís y te mandamos la licencia de tu equipo; si no, no pasa nada.</p>
+      <div class="ctas" style="justify-content:center">
+        <a class="btn primary" href="https://github.com/MaxiOtero/kiomind-releases/releases/latest/download/KioMind-Setup.exe">Descargar KioMind para Windows</a>
+        <a class="btn ghost" href="manual/#c2">Cómo se instala</a>
+      </div>
+      <div class="contact"><span>Instalador de unos 230 MB · Windows 10 / 11 de 64 bits</span></div>
+      <p style="margin-top:18px;font-size:14px">Si Windows muestra el aviso "Windows protegió su PC", tocá <b>Más información</b> y después <b>Ejecutar de todas formas</b>: es el aviso normal para programas nuevos.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta-box">
+      <p class="kicker">Contacto</p>
+      <h2>¿Te sirvió la prueba? Pedí tu licencia</h2>
+      <p>Escribinos con el código de equipo que muestra KioMind y te mandamos la licencia en el momento. También te ayudamos a pasar tu catálogo y a conectar Mercado Pago, WhatsApp y la facturación.</p>
+      <div class="ctas" style="justify-content:center">
+        <a class="btn wa" id="wa-link" href="https://wa.me/5493517701125?text=Hola%2C%20quiero%20saber%20m%C3%A1s%20de%20KioMind" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        <a class="btn ghost" id="mail-link" href="mailto:kiomind.ia@gmail.com?subject=Demo%20de%20KioMind">Mandar un mail</a>
+      </div>
+      <div class="contact"><span>WhatsApp <code id="wa-text">+54 9 351 770-1125</code></span><span>Mail <code>kiomind.ia@gmail.com</code></span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© <span id="year">2026</span> KioMind · Hecho en Argentina</div>
+    <div><a href="manual/">Manual de usuario</a><a href="manual/Manual-KioMind.pdf">Manual en PDF</a><a href="https://github.com/MaxiOtero/kiomind-releases/releases/latest/download/KioMind-Setup.exe">Descargar</a><a href="#funciones">Funciones</a><a href="#precio">Precio</a><a href="#contacto">Contacto</a></div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Captura ampliada"><img id="lightbox-img" src="" alt="" /></div>
+<script>
+  (function () {
+    var lb = document.getElementById("lightbox");
+    var img = document.getElementById("lightbox-img");
+    document.querySelectorAll(".g").forEach(function (fig) {
+      fig.addEventListener("click", function () {
+        var src = fig.querySelector("img").getAttribute("src");
+        img.src = src;
+        lb.classList.add("open");
+      });
+    });
+    lb.addEventListener("click", function () { lb.classList.remove("open"); img.src = ""; });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") lb.classList.remove("open"); });
+    document.getElementById("year").textContent = String(new Date().getFullYear());
+  })();
+</script>
+</body>
+</html>
